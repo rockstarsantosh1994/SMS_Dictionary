@@ -20,4 +20,16 @@
     <string name="mobile_number">Mobile Number</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="sign_up">Sign Up</string>
+    <string name="messages">Messages</string>
+    <string name="spam_messages">Spam Messages</string>
+    <string name="logout">Logout</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search">Search</string>
+    <string name="search_message">Search messages...</string>
+    <string name="no_appointment_found">No Data Found</string>
+    <string name="add_keyword">Add Keyword</string>
+    <string name="view_keywords">View Keywords</string>
+    <string name="type_your_keyword">Type your keyword</string>
+    <string name="add">Add</string>
 </resources>

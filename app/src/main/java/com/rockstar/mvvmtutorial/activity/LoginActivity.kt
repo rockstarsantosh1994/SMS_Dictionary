@@ -1,6 +1,8 @@
-package com.rockstar.mvvmtutorial
+package com.rockstar.mvvmtutorial.activity
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,8 +10,11 @@ import android.view.View
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
+import androidx.core.app.ActivityCompat
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.rockstar.mvvmtutorial.R
+import com.rockstar.mvvmtutorial.UserDataBase
 import com.rockstar.mvvmtutorial.entity.User
 import com.rockstar.mvvmtutorial.utitlity.AllKeys
 import com.rockstar.mvvmtutorial.utitlity.CommonMethods
@@ -23,6 +28,8 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
     private val TAG = "LoginActivity"
 
     lateinit var database: UserDataBase
+
+    private val PERMISSION_ID = 44
 
     //TextInputLayout and Editext Declaration..
     private var tilUserName: TextInputLayout?=null
@@ -46,6 +53,9 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
 
         //Basic intialisation...
         initViews()
+
+        //request run time permission
+        requestPermissions()
     }
 
     private fun initViews() {
@@ -133,6 +143,29 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
                 }else{
                     CommonMethods.showDialogForError(this@LoginActivity,"Invalid Login!")
                 }
+            }
+        }
+    }
+
+    // method to request for permissions
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(
+            this, arrayOf(
+                Manifest.permission.READ_SMS,
+            ),
+            PERMISSION_ID)
+    }
+
+    // If everything is alright then
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray,
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_ID) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(this, "All Permsission granted...", Toast.LENGTH_SHORT).show()
             }
         }
     }

@@ -1,10 +1,11 @@
-package com.rockstar.mvvmtutorial
+package com.rockstar.mvvmtutorial.activity
 
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.rockstar.mvvmtutorial.R
 import com.rockstar.mvvmtutorial.utitlity.AllKeys
 import com.rockstar.mvvmtutorial.utitlity.CommonMethods
 

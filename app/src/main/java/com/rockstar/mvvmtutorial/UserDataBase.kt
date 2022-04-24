@@ -5,9 +5,10 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.rockstar.mvvmtutorial.dao.UserDao
+import com.rockstar.mvvmtutorial.entity.Keywords
 import com.rockstar.mvvmtutorial.entity.User
 
-@Database(entities = [User::class], version = 1)
+@Database(entities = [User::class,Keywords::class], version = 1)
 abstract class UserDataBase:RoomDatabase() {
 
     abstract fun userDao() :UserDao

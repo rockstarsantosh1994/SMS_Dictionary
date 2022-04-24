@@ -1,13 +1,13 @@
-package com.rockstar.mvvmtutorial
+package com.rockstar.mvvmtutorial.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
-import androidx.room.Room
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.rockstar.mvvmtutorial.R
+import com.rockstar.mvvmtutorial.UserDataBase
 import com.rockstar.mvvmtutorial.entity.User
 import com.rockstar.mvvmtutorial.utitlity.CommonMethods
 import kotlinx.coroutines.*

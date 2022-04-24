@@ -9,6 +9,10 @@
         <entry key="..\:/StudioProjects/MVVMTutorial/app/src/main/res/layout/activity_register.xml" value="0.264" />
         <entry key="..\:/StudioProjects/MVVMTutorial/app/src/main/res/layout/activity_secondary.xml" value="0.23645833333333333" />
         <entry key="..\:/StudioProjects/MVVMTutorial/app/src/main/res/layout/activity_splash.xml" value="0.23645833333333333" />
+        <entry key="..\:/StudioProjects/MVVMTutorial/app/src/main/res/layout/fragment_all_messages.xml" value="0.23645833333333333" />
+        <entry key="..\:/StudioProjects/MVVMTutorial/app/src/main/res/layout/fragment_spam_messages.xml" value="0.22239583333333332" />
+        <entry key="..\:/StudioProjects/MVVMTutorial/app/src/main/res/layout/row_all_messages.xml" value="0.23645833333333333" />
+        <entry key="..\:/StudioProjects/MVVMTutorial/app/src/main/res/menu/menu_bottom.xml" value="0.23645833333333333" />
       </map>
     </option>
   </component>
