@@ -3,18 +3,26 @@ package com.rockstar.mvvmtutorial
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.CheckBox
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
+import com.rockstar.mvvmtutorial.entity.User
 import com.rockstar.mvvmtutorial.utitlity.AllKeys
 import com.rockstar.mvvmtutorial.utitlity.CommonMethods
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginActivity : AppCompatActivity(),View.OnClickListener {
 
     private val TAG = "LoginActivity"
+
+    lateinit var database: UserDataBase
 
     //TextInputLayout and Editext Declaration..
     private var tilUserName: TextInputLayout?=null
@@ -29,9 +37,12 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
     private var btnLogin: AppCompatButton?=null
     private var btnLoginWithOtp: AppCompatButton?=null
 
+    var user: User?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        database = UserDataBase.getDatabase(applicationContext)
 
         //Basic intialisation...
         initViews()
@@ -104,7 +115,26 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
     }
 
     private fun login() {
-        Toast.makeText(applicationContext, "Login Soon...", Toast.LENGTH_LONG).show()
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                user = database.userDao().getUserLogin(etUserName?.text.toString(),etPassword?.text.toString())
+                Log.e(TAG, "initViews: $user")
+            }
+
+            withContext(Dispatchers.Main){
+                if(user?.mobileNumber==etUserName?.text.toString() && user?.password==etPassword?.text.toString()){
+                    CommonMethods.setPreference(this@LoginActivity,AllKeys.USERNAME,etUserName?.text.toString())
+                    CommonMethods.setPreference(this@LoginActivity,AllKeys.PASSWORD,etPassword?.text.toString())
+
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                    finish()
+                }else{
+                    CommonMethods.showDialogForError(this@LoginActivity,"Invalid Login!")
+                }
+            }
+        }
     }
 
     private fun isValidated():Boolean{
