@@ -1,5 +1,6 @@
 package com.rockstar.mvvmtutorial.fragment
 
+import `in`.galaxyofandroid.spinerdialog.SpinnerDialog
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
@@ -19,7 +20,6 @@ import com.rockstar.mvvmtutorial.UserDataBase
 import com.rockstar.mvvmtutorial.adapter.AllMessagesAdapter
 import com.rockstar.mvvmtutorial.data_model.SmsDataClass
 import com.rockstar.mvvmtutorial.entity.Keywords
-import com.rockstar.mvvmtutorial.utitlity.CommonMethods
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -54,6 +54,10 @@ class SpamMessages : Fragment(), View.OnClickListener {
 
     private var allMessagesAdapter: AllMessagesAdapter?=null
 
+    private var spamList=ArrayList<SmsDataClass>()
+
+    val keywordsList=ArrayList<String>()
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view= inflater.inflate(R.layout.fragment_spam_messages, container, false)
@@ -66,6 +70,10 @@ class SpamMessages : Fragment(), View.OnClickListener {
             smsDataClassList.addAll(arguments?.getParcelableArrayList("sms_list")!!)
 
         }
+
+        //Add data to arraylist
+        updateKeywordList()
+
         return view
     }
 
@@ -126,7 +134,12 @@ class SpamMessages : Fragment(), View.OnClickListener {
             }
 
             R.id.btn_view_keyword->{
+                val spinnerDialogDistrict = SpinnerDialog(requireContext() as Activity?, keywordsList, "View Keywords", R.style.DialogAnimations_SmileWindow, "Close") // With 	Animation
 
+                spinnerDialogDistrict.bindOnSpinerListener { item: String, position: Int ->
+                    filterTable(item )
+                }
+                spinnerDialogDistrict.showSpinerDialog()
             }
         }
     }
@@ -145,5 +158,38 @@ class SpamMessages : Fragment(), View.OnClickListener {
 
         // Show Dialog
         mDialog.show()
+    }
+
+    private fun updateKeywordList(){
+        database.userDao().getDictionaryKeywords().observe(viewLifecycleOwner) {
+            if(it.isNotEmpty()){
+                for(temp in it){
+                    keywordsList.add(temp.keyword)
+                }
+                spamList.clear()
+                for(i in /*0 until*/ keywordsList){
+                    for(j in smsDataClassList){
+                        if(j._msg.contains(i)){
+                            spamList.add(j)
+                        }
+                    }
+                }
+
+                allMessagesAdapter= AllMessagesAdapter(requireContext(),spamList)
+                rvAllMessages?.adapter=allMessagesAdapter
+            }
+        }
+    }
+
+    private fun filterTable(text: String) {
+        val filteredList1: ArrayList<SmsDataClass> = ArrayList()
+        for (item in smsDataClassList) {
+            if (text.let { item._address.contains(it, true) } || text.let { item._msg.contains(it, true) }) {
+                filteredList1.add(item)
+            }
+        }
+        //Log.e(TAG, "filter: size" + filteredList1.size());
+        // Log.e(TAG, "filter: List" + filteredList1.toString());
+        allMessagesAdapter?.updateData(requireContext(), filteredList1)
     }
 }

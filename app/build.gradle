@@ -84,6 +84,10 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.1")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1")
 
+    //Bottom navigation
     implementation 'com.github.ibrahimsn98:SmoothBottomBar:1.7.9'
+
+    //Single searchable spinner..
+    implementation 'com.github.MdFarhanRaja:SearchableSpinner:2.0'
 
 }
