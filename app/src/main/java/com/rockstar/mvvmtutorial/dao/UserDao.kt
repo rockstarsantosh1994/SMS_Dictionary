@@ -19,6 +19,9 @@ interface UserDao {
     @Delete
     suspend fun deleteUser(user: User)
 
+    @Delete
+    suspend fun deleteKeyword(keywords: Keywords)
+
     @Query("select * from user")
     fun getContact(): LiveData<List<User>>
 

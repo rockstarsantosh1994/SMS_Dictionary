@@ -15,13 +15,11 @@ import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 import com.rockstar.mvvmtutorial.R
 import com.rockstar.mvvmtutorial.UserDataBase
+import com.rockstar.mvvmtutorial.entity.Keywords
 import com.rockstar.mvvmtutorial.entity.User
 import com.rockstar.mvvmtutorial.utitlity.AllKeys
 import com.rockstar.mvvmtutorial.utitlity.CommonMethods
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 
 class LoginActivity : AppCompatActivity(),View.OnClickListener {
 
@@ -56,6 +54,14 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
 
         //request run time permission
         requestPermissions()
+
+        GlobalScope.launch {
+            withContext(Dispatchers.IO) {
+                database.userDao().insertDictionaryWord(Keywords(0, "Spam"))
+                database.userDao().insertDictionaryWord(Keywords(0, "Fraud"))
+                database.userDao().insertDictionaryWord(Keywords(0, "Rummy"))
+            }
+        }
     }
 
     private fun initViews() {
@@ -136,12 +142,13 @@ class LoginActivity : AppCompatActivity(),View.OnClickListener {
                     CommonMethods.setPreference(this@LoginActivity,AllKeys.USERNAME,etUserName?.text.toString())
                     CommonMethods.setPreference(this@LoginActivity,AllKeys.PASSWORD,etPassword?.text.toString())
 
+
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
                     finish()
-                }else{
-                    CommonMethods.showDialogForError(this@LoginActivity,"Invalid Login!")
+                } else{
+                    CommonMethods.showDialogForError(this@LoginActivity,"Invalid Login...Username or Password not match!")
                 }
             }
         }

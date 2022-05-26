@@ -20,9 +20,9 @@
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_add_keyword"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginEnd="@dimen/_10sdp"
                 android:layout_marginBottom="@dimen/_15ssp"
@@ -34,17 +34,39 @@
                 android:paddingEnd="@dimen/_10sdp"
                 android:text="@string/add_keyword"
                 android:textAllCaps="false"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_weight="1"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_delete_keyword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:layout_marginBottom="@dimen/_15ssp"
+                android:background="@drawable/editext_background"
+                android:backgroundTint="@color/purple_700"
+                android:fontFamily="@font/sourcesanspro_regular"
+                android:gravity="center"
+                android:paddingStart="@dimen/_10sdp"
+                android:paddingEnd="@dimen/_10sdp"
+                android:text="@string/delete_keyword"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12ssp"
+                android:textStyle="bold"
+                android:layout_weight="1"/>
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btn_view_keyword"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/_30sdp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginEnd="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_5sdp"
                 android:layout_marginBottom="@dimen/_15ssp"
                 android:background="@drawable/editext_background"
                 android:backgroundTint="@color/purple_700"
@@ -54,9 +76,10 @@
                 android:paddingEnd="@dimen/_10sdp"
                 android:text="@string/view_keywords"
                 android:textAllCaps="false"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:layout_weight="1"/>
 
         </LinearLayout>
 
@@ -110,11 +133,12 @@
                 android:paddingEnd="@dimen/_10sdp"
                 android:text="@string/add"
                 android:textAllCaps="false"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="@dimen/_12ssp"
                 android:textStyle="bold" />
 
         </LinearLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_all_messages"
             android:layout_width="match_parent"

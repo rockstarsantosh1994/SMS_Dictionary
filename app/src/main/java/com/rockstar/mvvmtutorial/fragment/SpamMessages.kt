@@ -20,6 +20,7 @@ import com.rockstar.mvvmtutorial.UserDataBase
 import com.rockstar.mvvmtutorial.adapter.AllMessagesAdapter
 import com.rockstar.mvvmtutorial.data_model.SmsDataClass
 import com.rockstar.mvvmtutorial.entity.Keywords
+import com.rockstar.mvvmtutorial.utitlity.CommonMethods
 import dev.shreyaspatil.MaterialDialog.MaterialDialog
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -44,6 +45,7 @@ class SpamMessages : Fragment(), View.OnClickListener {
 
     //ApCompatButton declration...
     private var btnAddKeyWord:AppCompatButton?=null
+    private var btnDeleteKeyWord:AppCompatButton?=null
     private var btnViewKeyWord:AppCompatButton?=null
     private var btnAdd:AppCompatButton?=null
 
@@ -57,6 +59,7 @@ class SpamMessages : Fragment(), View.OnClickListener {
     private var spamList=ArrayList<SmsDataClass>()
 
     val keywordsList=ArrayList<String>()
+    val keywordArrayList=ArrayList<Keywords>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -68,7 +71,6 @@ class SpamMessages : Fragment(), View.OnClickListener {
 
         if (arguments?.getParcelableArrayList<SmsDataClass>("sms_list") != null) {
             smsDataClassList.addAll(arguments?.getParcelableArrayList("sms_list")!!)
-
         }
 
         //Add data to arraylist
@@ -97,11 +99,13 @@ class SpamMessages : Fragment(), View.OnClickListener {
         //AppCompatButton binding..
         btnAddKeyWord=view?.findViewById(R.id.btn_add_keyword)
         btnViewKeyWord=view?.findViewById(R.id.btn_view_keyword)
+        btnDeleteKeyWord=view?.findViewById(R.id.btn_delete_keyword)
         btnAdd=view?.findViewById(R.id.btn_add)
 
         //ClickListeners..
         btnAddKeyWord?.setOnClickListener(this)
         btnViewKeyWord?.setOnClickListener(this)
+        btnDeleteKeyWord?.setOnClickListener(this)
         btnAdd?.setOnClickListener(this)
     }
 
@@ -140,6 +144,24 @@ class SpamMessages : Fragment(), View.OnClickListener {
                     filterTable(item )
                 }
                 spinnerDialogDistrict.showSpinerDialog()
+            }
+
+            R.id.btn_delete_keyword->{
+                database.userDao().getDictionaryKeywords().observe(viewLifecycleOwner) {
+                    keywordArrayList.clear()
+                    keywordArrayList.addAll(it)
+                }
+
+                if(keywordArrayList.size==0){
+                    CommonMethods.showDialogForError(requireContext(),"Please Add Keywords!")
+                }else{
+                    val ft1 = requireActivity().supportFragmentManager.beginTransaction()
+                    val deleteKeywordDialog = DeleteKeywordDialog()
+                    val bundle = Bundle()
+                    bundle.putParcelableArrayList("keywords_list", keywordArrayList)
+                    deleteKeywordDialog.arguments = bundle
+                    deleteKeywordDialog.show(ft1, "Tag")
+                }
             }
         }
     }

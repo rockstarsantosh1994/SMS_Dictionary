@@ -2,11 +2,9 @@
 <LinearLayout
     android:id="@+id/ll_message_click"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-
 
     <TextView
         android:id="@+id/tv_sender_name"
@@ -16,28 +14,14 @@
         android:textStyle="bold"
         android:textAllCaps="true"
         android:textColor="@color/black"
-        android:textSize="@dimen/_12sdp"
+        android:fontFamily="@font/sourcesanspro_regular"
+        android:textSize="@dimen/_11sdp"
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginStart="@dimen/_10sdp"
         android:layout_marginEnd="@dimen/_10sdp" />
 
-    <TextView
-        android:id="@+id/tv_sender_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="abcedefghijklmnopqesetruwxyz"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="@dimen/_10sdp"
-        android:fontFamily="@font/baloochettan2_regular"
-        android:maxLines="5"
-        android:layout_marginTop="@dimen/_3sdp"
-        android:layout_marginStart="@dimen/_10sdp"
-        android:layout_marginEnd="@dimen/_10sdp"/>
-
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_1sdp"
+        android:layout_height="0.5dp"
         android:background="@color/purple_700"/>
 </LinearLayout>
